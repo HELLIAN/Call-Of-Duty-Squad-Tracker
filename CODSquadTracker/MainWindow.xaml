@@ -1,0 +1,361 @@
+﻿<Controls:MetroWindow
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+        x:Class="MainWindow"
+        Loaded="Onload"
+        mc:Ignorable="d"
+        Title="COD: SQUAD TRACKER (BETA)" Height="810" Width="855" MinWidth="855" MinHeight="810">
+
+    <!-- Set Main background -->
+    <Controls:MetroWindow.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="Black" Offset="1"/>
+            <GradientStop Color="#FF190023" Offset="0.233"/>
+        </LinearGradientBrush>
+    </Controls:MetroWindow.Background>
+
+
+    <!-- Main Grid that holds everything -->
+    <Grid>
+        <!-- Header and searchbar -->
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,0" Height="55" Background="#272727" Opacity="0.98">
+            <Image Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality" Width="110" Source="Top-Header-1.png"/>
+            <Label Content="COD SQUAD" Margin="125,9,0,0" FontSize="14px" Foreground="#FFAE1D4C" FontWeight="Normal" Width="Auto" Height="Auto" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Top"/>
+            <Label Content="TRACKER" Margin="125,28,0,0" FontSize="11px" FontWeight="Normal" Width="Auto" Height="Auto" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Foreground="#FFA4A4A4"/>
+
+            <Border CornerRadius="2" BorderBrush="#161616" BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="40" Margin="240,8,150,8" Opacity="0.90">
+                <Border.Background>
+                    <SolidColorBrush Color="#161616" Opacity="0.90"/>
+                </Border.Background>
+                <TextBox x:Name="UserSeachBox" Margin="50,0,10,0" TextWrapping="Wrap" Background="Transparent" HorizontalAlignment="Stretch" Controls:TextBoxHelper.Watermark="Look up user..." Controls:TextBoxHelper.ClearTextButton="True" FontSize="16" FontStyle="Normal" FontWeight="Normal" VerticalContentAlignment="Center" BorderThickness="0" Height="30" VerticalAlignment="Stretch" CaretBrush="#FFB8B0B0" SelectionBrush="#FF611F8F" GotFocus="textBox_Selected" KeyDown="textBox_KeyDown"/>
+            </Border>
+        </Grid>
+
+        
+        
+        
+        <!-- Controls and Data -->
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Margin="0,64,0,30" Padding="14,0,14,0">
+            <Grid Margin="0,14,0,30">
+
+                <!-- Top controls and buttons -->
+                <Grid x:Name="TopControls" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="44" Visibility="Visible" Margin="0,0,0,0" Opacity="0.90">
+                    <Grid.Effect>
+                        <DropShadowEffect ShadowDepth="2"/>
+                    </Grid.Effect>
+                    <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" Orientation="Horizontal" Margin="0,0,0,0" Background="#212121">
+                        <Label x:Name="Leaderboards" Content="Weekly Tournament" FontSize="20px" FontWeight="Normal" Width="Auto" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Cursor="Hand" MouseDown ="TabLeaderboard_MouseDown">
+                            <Label.Style>
+                                <Style TargetType="{x:Type Label}">
+                                    <Setter Property="Background" Value="#212121"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#FF310244"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Label.Style>
+                        </Label>
+                        <Label x:Name="SquadView" Content="Squad" FontSize="20px" FontWeight="Normal" Width="120" Height="Auto" HorizontalAlignment="Left" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Cursor="Hand" MouseDown="TabSquadList_MouseDown">
+                            <Label.Style>
+                                <Style TargetType="{x:Type Label}">
+                                    <Setter Property="Background" Value="#212121"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#FF310244"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Label.Style>
+                        </Label>
+                        <Label x:Name="Rewards" Content="Rewards" FontSize="20px" FontWeight="Normal" Height="Auto"  Width="120" HorizontalAlignment="Left" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Cursor="Hand" MouseDown="Rewards_MouseDown">
+                            <Label.Style>
+                                <Style TargetType="{x:Type Label}">
+                                    <Setter Property="Background" Value="#212121"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#FF310244"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Label.Style>
+                        </Label>
+                    </StackPanel>
+                </Grid>
+
+
+                
+                
+                <!-- Current Objective data bar -->
+                <Grid HorizontalAlignment="Stretch" Visibility="Collapsed" x:Name="ObjectiveBar" VerticalAlignment="Top" Height="30" Margin="0,56,0,0" Background="#FF161616" Opacity="0.9">
+                    <Grid.Effect>
+                        <DropShadowEffect  ShadowDepth="2"/>
+                    </Grid.Effect>
+                    <StackPanel  Width="Auto" Height="Auto" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Label x:Name="Type" Content="TYPE" FontSize="11px" FontWeight="Normal" Width="Auto" Height="Auto" VerticalAlignment ="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="10,0,10,0"/>
+                        <Separator>
+                            <Separator.LayoutTransform>
+                                <RotateTransform Angle="90" />
+                            </Separator.LayoutTransform>
+                        </Separator>
+                        <Label x:Name="Goal" Content="GOAL" FontSize="11px" FontWeight="Normal" Width="Auto" Height="Auto" VerticalAlignment ="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center"  Margin="10,0,10,0"/>
+                        <Separator>
+                            <Separator.LayoutTransform>
+                                <RotateTransform Angle="90" />
+                            </Separator.LayoutTransform>
+                        </Separator>
+                        <Label x:Name="Description" Content="DESCRIPTION" FontSize="11px" FontWeight="Normal" Width="Auto" Height="Auto" VerticalAlignment ="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center"  Margin="10,0,0,0"/>
+                    </StackPanel>
+                </Grid>
+
+
+                
+                
+                <!-- Leaderboards Data Grid -->
+                <Grid Margin="0,110,0,0" Visibility="Visible" x:Name="GridLeaderboards" Background="#FF191919" Opacity="0.9" Height="526" VerticalAlignment="Top">
+                    <Grid.Effect>
+                        <DropShadowEffect ShadowDepth="2"/>
+                    </Grid.Effect>
+
+                    <Label Content="Leaderboard" FontSize="15px" FontWeight="SemiBold" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,2,0,0"/>
+
+                    <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" HorizontalAlignment="Right" VerticalAlignment="Top" Width="Auto" Height="30" Background="#161616" Margin="0,2,10,0">
+                        <Label Content="Time Remaining:" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,00,0" />
+                        <Label Name="RemainTxt" Content="00:00:00:00" FontSize="10" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,20,0" />
+                        <Label Content="Current Position:" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,0,0" />
+                        <Label Name="CurrentPos" Content="0" FontSize="10" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,0,0" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" HorizontalAlignment="Left" VerticalAlignment="Top" Width="Auto" Height="30" Background="#161616" Margin="10,2,120,0">
+                        <Label Content="Refresh in:" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,0,0" />
+                        <Label Name="CountTxt" Content="0" FontSize="10" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,0,0" />
+                    </StackPanel>
+
+                    <DataGrid x:Name="DataGridLeaderboard" SelectionMode="Single" Opacity="0.9" FontSize="15px" CanUserResizeColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" IsReadOnly="True" GridLinesVisibility="Horizontal" HorizontalAlignment="Stretch" Width="Auto" Margin="0,40,0,0" AutoGenerateColumns="False" Height="480" VerticalAlignment="Top">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn x:Name="LBIconWidth" Width="25"  IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Image Source="{Binding avatarUrl}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="SQUAD" Binding="{Binding squadName}" Width="*"/>
+                            <DataGridTextColumn Header="PROGRESS" Binding="{Binding progress}" Width="*"/>
+                            <DataGridTextColumn Header="RANK" Binding="{Binding rank}" Width="*"/>
+                        </DataGrid.Columns>
+
+                        <DataGrid.Resources>
+                            <Style TargetType="{x:Type DataGridCell}">
+                                <Setter Property="BorderBrush" Value="#3f3f3f" />
+                                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                            </Style>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#3f3f3f"/>
+                        </DataGrid.Resources>
+
+                        <DataGrid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Name="ReportSquad"  Header="Report Squad" FontSize="12" Click="ReportSquad_Click"/>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
+
+                    </DataGrid>
+                </Grid>
+
+
+
+
+                <!-- Current Squad data bar -->
+                <Grid HorizontalAlignment="Stretch" Visibility="Visible" x:Name="MySquadBar" VerticalAlignment="Top"  Height="30" Margin="0,56,0,0" Background="#FF161616" Opacity="0.9">
+                    <Grid.Effect>
+                        <DropShadowEffect  ShadowDepth="2"/>
+                    </Grid.Effect>
+                    <StackPanel  Width="Auto" Height="Auto" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Label x:Name="SquadNamelabel" Content="Sqauad Name:" FontSize="11px" FontWeight="Normal" Width="Auto" Height="Auto" VerticalAlignment ="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="10,0,0,0"/>
+                        <Label x:Name="SquadNameTxt" Content="SQUAD NAME" FontSize="11px" FontWeight="Normal" Width="Auto" Height="Auto" VerticalAlignment ="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,0,10,0"/>
+                        <Separator>
+                            <Separator.LayoutTransform>
+                                <RotateTransform Angle="90" />
+                            </Separator.LayoutTransform>
+                        </Separator>
+                        <Label x:Name="SqaudGenLabel" Content="Your General:" FontSize="11px" FontWeight="Normal" Width="Auto" Height="Auto" VerticalAlignment ="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center"  Margin="10,0,0,0"/>
+                        <Label x:Name="SqaudGenTxt" Content="GENERAL" FontSize="11px" FontWeight="Normal" Width="Auto" Height="Auto" VerticalAlignment ="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center"  Margin="0,0,10,0"/>
+                        <Separator>
+                            <Separator.LayoutTransform>
+                                <RotateTransform Angle="90" />
+                            </Separator.LayoutTransform>
+                        </Separator>
+                        <Label x:Name="SqaudAboutLabel" Content="About Squad:" FontSize="11px" FontWeight="Normal" Width="Auto" Height="Auto" VerticalAlignment ="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center"  Margin="10,0,0,0"/>
+                        <Label x:Name="SqaudAboutTxt" Content="SQUAD ABOUT" FontSize="11px" FontWeight="Normal" Width="Auto" Height="Auto" VerticalAlignment ="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center"  Margin="0,0,10,0"/>
+                        <Separator>
+                            <Separator.LayoutTransform>
+                                <RotateTransform Angle="90" />
+                            </Separator.LayoutTransform>
+                        </Separator>
+                        <Label x:Name="SquadMemberCountLabel" Content="Member Count:" FontSize="11px" FontWeight="Normal" Width="Auto" Height="Auto" VerticalAlignment ="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center"  Margin="10,0,0,0"/>
+                        <Label x:Name="SquadMemberCountTxt" Content="MEMBER COUNT" FontSize="11px" FontWeight="Normal" Width="Auto" Height="Auto" VerticalAlignment ="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center"  Margin="0,0,0,0"/>
+                    </StackPanel>
+                </Grid>
+
+                
+                
+                
+                <!-- Squad list Data Grid -->
+                <Grid Margin="0,110,0,0" Visibility="Collapsed" x:Name="GridSquadList" Background="#FF191919" Opacity="0.9">
+                    <Grid.Effect>
+                        <DropShadowEffect ShadowDepth="2"/>
+                    </Grid.Effect>
+
+                    <Label Content="Squad List" FontSize="15px" FontWeight="SemiBold" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,2,0,0"/>
+
+                    <DataGrid x:Name="DataGridSquadList" SelectionMode="Single" Opacity="0.9" FontSize="15px" CanUserResizeColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" IsReadOnly="True" GridLinesVisibility="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="480" Width="Auto" Margin="0,40,0,0" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Width="35" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Image Source="{Binding avatarUrl}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="USERS" Binding="{Binding gamerTag}" Width="*"/>
+                            <DataGridTextColumn Header="PLATFORM ID" Binding="{Binding platformId}" Width="*"/>
+                            <DataGridTextColumn Header="PLATFORM" Binding="{Binding platform}" Width="*"/>
+                            <DataGridTextColumn Header="PROGRESS" Binding="{Binding progress}" Width="*"/>
+                        </DataGrid.Columns>
+
+                        <DataGrid.Resources>
+                            <Style TargetType="{x:Type DataGridCell}">
+                                <Setter Property="BorderBrush" Value="#3f3f3f" />
+                                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                            </Style>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#3f3f3f"/>
+                        </DataGrid.Resources>
+                    </DataGrid>
+                </Grid>
+
+
+                
+                
+
+                <!-- Searched Users Data Grid -->
+                <Grid Margin="0,110,0,0" Visibility="Collapsed" x:Name="GridFoundUsers" Background="#FF191919" Opacity="0.9">
+                    <Grid.Effect>
+                        <DropShadowEffect ShadowDepth="2"/>
+                    </Grid.Effect>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Top" Width="Auto" Height="40" Background="#161616" Margin="0,0,0,0">
+                        <Label Content="Platform:" FontSize="12px" FontWeight="SemiBold" VerticalAlignment="Center" Margin="8,0,-2,0"/>
+                        <ComboBox x:Name="listBoxPlatform" SelectedIndex="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Margin="10,0,0,0" DropDownClosed="listBoxPlatform_DropDownClosed">
+                            <ComboBoxItem Content="ACTIVISION"/>
+                            <ComboBoxItem Content="PLAYSTATION"/>
+                            <ComboBoxItem Content="XBOX"/>
+                            <ComboBoxItem Content="BATTLE.NET"/>
+                            <ComboBoxItem Content="STEAM"/>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <Label Content="Users Found" FontSize="15px" FontWeight="SemiBold" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,2,0,0"/>
+
+                    <DataGrid x:Name="DataGridFoundUser" SelectionMode="Single" Opacity="0.9" FontSize="15px" CanUserResizeColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" IsReadOnly="True" GridLinesVisibility="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="481" Width="Auto" Margin="0,40,0,0" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Width="35" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Image Source="{Binding Avatar.AvatarUrlSmallSsl}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="USERS" Binding="{Binding Username}" Width="*"/>
+                            <DataGridTextColumn Header="PLATFORM" Binding="{Binding Platform}" Width="*"/>
+                        </DataGrid.Columns>
+
+                        <DataGrid.Resources>
+                            <Style TargetType="{x:Type DataGridCell}">
+                                <Setter Property="BorderBrush" Value="#3f3f3f" />
+                                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                            </Style>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#3f3f3f"/>
+                        </DataGrid.Resources>
+                    </DataGrid>
+                </Grid>
+
+            </Grid>
+
+        </ScrollViewer>
+
+
+
+
+
+
+
+        <!-- Fly Out Menu for Login and settings -->
+        <Controls:Flyout x:Name="Settings" Header="SETTINGS" Position="Left" Width="390" IsOpen="False" Visibility="Collapsed" Margin="0,0,0,0">
+            <StackPanel>
+                <Separator Background="LightGray" Foreground="LightGray"/>
+                <Label Content="Login" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,20"/>
+                <Label Content="Please login using your Activision account." FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,0"/>
+                <Label Content="NOTE: Your password and email address are only stored on your machine!" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,-10,0,20"/>
+                <TextBox Name="Emailtxt" Controls:TextBoxHelper.Watermark="Email Address" Margin="20,0,20,0"/>
+                <PasswordBox Name="Passtxt" Controls:TextBoxHelper.Watermark="Password" Margin="20,10,20,0"/>
+                <StackPanel Orientation ="Horizontal" Width="360" Margin="0,20,0,0">
+                    <CheckBox Name="SaveCredsBox"  Content="Save Credentials" Margin="0,0,30,0"/>
+                    <Button x:Name="buttonReset" BorderThickness="1" HorizontalAlignment="Right" VerticalAlignment="Top" Width="88" Height="22" Padding="0" Margin="10" IsEnabled="True" Click="buttonReset_Click">
+                        <Label Content="Reset" FontSize="10px" HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
+                    </Button>
+                    <Button x:Name="buttonLogin" BorderThickness="1" HorizontalAlignment="Right" VerticalAlignment="Top" Width="88" Height="22" Padding="0" Margin="10" IsEnabled="True" Click="buttonLogin_Click">
+                        <Label Content="Login" FontSize="10px" HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
+                    </Button>
+                </StackPanel>
+                <StackPanel Orientation ="Vertical" Width="360" Margin="0,0,0,0">
+                    <Button x:Name="buttonLogout" BorderThickness="1" HorizontalAlignment="Right" VerticalAlignment="Top" Width="200" Height="22" Padding="0" Margin="10" IsEnabled="True" Click="buttonLogout_Click">
+                        <Label Content="Logout" FontSize="10px" HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </Controls:Flyout>
+
+
+        
+        
+        
+        <!-- Fly Out Menu to display Rewards for current objectives -->
+        <Controls:Flyout x:Name="RewardsFly" Position="Bottom" Width="400" Height="400" IsOpen="False"  Visibility="Collapsed" Margin="100,300,100,125">
+            <StackPanel Margin ="10">
+                <Label Content="First Place Rewards" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
+                <Label Name="FP_RW1" Content="" FontSize="12" FontStyle="Oblique" HorizontalAlignment="Center"/>
+                <Label Name="FP_RW2" Content="" FontSize="12"  FontStyle="Oblique" HorizontalAlignment="Center"/>
+                <Label Name="FP_RW3" Content="" FontSize="12"  FontStyle="Oblique" HorizontalAlignment="Center"/>
+                <Separator Background="LightGray" Foreground="LightGray" Margin="0,10,0,10"/>
+                <Label Content="Second Place Rewards" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
+                <Label Name="SP_RW1" Content="" FontSize="12" FontStyle="Oblique" HorizontalAlignment="Center"/>
+                <Label Name="SP_RW2" Content="" FontSize="12" FontStyle="Oblique" HorizontalAlignment="Center"/>
+                <Separator Background="LightGray" Foreground="LightGray" Margin="0,10,0,10"/>
+                <Label Content="Third Place Rewards" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
+                <Label Name="TP_RW1" Content="" FontSize="12" FontStyle="Oblique" HorizontalAlignment="Center"/>
+                <Label Name="TP_RW2" Content="" FontSize="12"  FontStyle="Oblique" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Controls:Flyout>
+
+
+        
+        
+        
+        <!-- Bottom Status bar and options -->
+
+        <StatusBar HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="30" VerticalContentAlignment="Center" Margin="0,0,0,0">
+            <Label Content="SETTINGS" Cursor="Hand" ForceCursor="True" FontWeight="Light" Margin="0,-1,0,0" VerticalAlignment="Center" MouseDown="Settings_MouseDown"/>
+            <Separator Background="LightGray" Foreground="LightGray"/>
+            <Label Content="BETA FEEDBACK" Cursor="Hand" ForceCursor="True" FontWeight="Light" Margin="0,-1,0,0" VerticalAlignment="Center"/>
+            <Separator Background="LightGray" Foreground="LightGray"/>
+            <Label Content="SUPPORT" Cursor="Hand" ForceCursor="True" FontWeight="Light" Margin="0,-1,0,0" VerticalAlignment="Center"/>
+            <Separator Background="LightGray" Foreground="LightGray"/>
+            <Label Content="DONATE" Cursor="Hand" ForceCursor="True" FontWeight="Light" Margin="0,-1,0,0" VerticalAlignment="Center"/>
+        </StatusBar>
+        <StatusBar HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="30" VerticalContentAlignment="Center" Background="Transparent" Margin="0,0,0,0">
+            <Label Name="OnStat" Content="ONLINE STATUS" FontWeight="Light" Margin="0,-1,0,0" VerticalAlignment="Center"/>
+        </StatusBar>
+    </Grid>
+</Controls:MetroWindow>
